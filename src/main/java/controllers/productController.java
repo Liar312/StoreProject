@@ -24,5 +24,8 @@ public class productController {
         return "products";
     }
     @PostMapping("product/create")
-    public String CreateProduct(Product product)
+    public String CreateProduct(Product product){
+        productService.saveProduct(product);
+        return"reidrect:/"; //обновление списка
+    }
 }
