@@ -5,6 +5,7 @@ import models.Product;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import services.ProductService;
 
@@ -27,5 +28,10 @@ public class productController {
     public String CreateProduct(Product product){
         productService.saveProduct(product);
         return"reidrect:/"; //обновление списка
+    }
+    @PostMapping("/product/delete/{id}")
+    public String DeleteProduct(@PathVariable  Long id ){
+        productService.deleteProduct(id);
+        return "redirect:/";
     }
 }
