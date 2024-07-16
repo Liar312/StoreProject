@@ -1,4 +1,4 @@
-package models;
+package com.example.storeproject.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,11 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Primary;
 
+@Entity
+@Table(name = "products")
 @Data
 @AllArgsConstructor
-@Entity
 @NoArgsConstructor
-@Table(name="products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,7 +18,7 @@ public class Product {
     private long id;
 
 
-    private String tittle;
+    private String title;
     private String author;
     private String city;
     private int price;

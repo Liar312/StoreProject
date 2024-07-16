@@ -1,15 +1,14 @@
-package services;
+package com.example.storeproject.services;
 
 import com.example.storeproject.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import models.Product;
+import com.example.storeproject.models.Product;
 
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -21,7 +20,7 @@ public class ProductService {
     private long ID = 0;
 
     public List<Product> ListProducts(String author){
-        if(author != null) productRepository.findByAuthor(author);
+        if(author != null) return productRepository.findByAuthor(author);
 
         return productRepository.findAll();
     }
@@ -30,7 +29,7 @@ public class ProductService {
         products.add(new Product(1,"Example tittle","Example authort","Examle city",5000,"Example description"));
         products.add(new Product(2,"Gaming platform","Sony","New York",52000,"Simple description"));
     }
-    public List<Product> listOfAll(){
+    public List<Product> listOfAll(String title){
         return products;             //simple return added products
     }
     public void saveProduct(Product product){
