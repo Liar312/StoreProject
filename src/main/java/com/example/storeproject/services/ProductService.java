@@ -24,6 +24,10 @@ public class ProductService {
 
         return productRepository.findAll();
     }
+    public List<Product> ListByTitle(String title){
+        if(title!=null) return productRepository.findByTitle(title);
+        return productRepository.findAll();//обязательно данный метод должен быть реализован в репе
+    }
     private List<Product> products = new ArrayList<>();
     {
         products.add(new Product(1,"Example tittle","Example authort","Examle city",5000,"Example description"));
