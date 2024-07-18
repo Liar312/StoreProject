@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Primary;
 @NoArgsConstructor
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
     @Column(name = "title")

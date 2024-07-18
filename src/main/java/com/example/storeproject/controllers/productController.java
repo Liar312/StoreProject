@@ -19,14 +19,18 @@ public class productController {
 //    public String products(){
 //        return "/";
 //    }
+@GetMapping("/")
+public String products(@RequestParam(name = "title", required = false) String title, Model model) {
+    model.addAttribute("products", productService.ListByTitle(title));
+    return "products";
+}
 
 
-
-    @GetMapping("/")
-    public <model> String products(@RequestParam(name = "title",required = false) String title, Model model){
-        model.addAttribute("products",productService.listOfAll(title));
-        return "products";
-    }
+//    @GetMapping("/")
+//    public <model> String products(@RequestParam(name = "title",required = false) String title, Model model){
+//        model.addAttribute("products",productService.listOfAll(title));
+//        return "products";
+//    }
 
 
     @PostMapping("product/create")

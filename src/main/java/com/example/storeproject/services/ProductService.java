@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import com.example.storeproject.models.Product;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ public class ProductService {
     public List<Product> listOfAll(String title){
         return products;             //simple return added products
     }
+    @Transactional
     public void saveProduct(Product product){
 //        product.setId(++ID); этот функционал выполняет @GeneratedValue
         log.info("Saving new {}",product);//метод toString подставит сюда строковое представление product
