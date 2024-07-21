@@ -44,9 +44,22 @@ public class ProductService {
         if(file1.getSize()!= 0){
             image1 = toImageEntity(file1);
             image1.setPreviewImage(true);
+            product.addImageToProduct(image1);
+        }
+        if(file2.getSize() != 0){
+            image2 = toImageEntity(file2);
+            image2.setPreviewImage(true);
+            product.addImageToProduct(image2);
+        }
+        if(file2.getSize()!= 0){
+            image3 = toImageEntity(file3);
+            image3.setPreviewImage(true);
+            product.addImageToProduct(image3);
         }
 
-        log.info("Saving new {}",product);//метод toString подставит сюда строковое представление product
+        log.info("Saving new Product. Title {}; Author{}",product.getTitle(),product.getAuthor());//метод toString подставит сюда строковое представление product
+        Product productFromDb = productRepository.save(product);
+        productFromDb.setPreviewImageId(productFromDb.getImages().get(0).getId());//обращаемся к первой фотке в массиве и получаем её айдишник
         productRepository.save(product);
     }
 

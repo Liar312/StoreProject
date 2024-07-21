@@ -40,5 +40,9 @@ public class Product {
     private void init(){
         dateOfCreating = LocalDateTime.now();
     }
+    public void addImageToProduct(Image image){
+        image.setProduct(this);//setproduct тянется из image тк там создается объект и с аннотацией ломбок и соотв таким методом
+        images.add(image);
+    }
 
 }
