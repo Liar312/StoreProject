@@ -36,6 +36,11 @@ public class Product {
     private List <Image> images = new ArrayList<>();
     private Long previewImageId;//при создании товара будем указывать id для того чтобы поставть на превью
     private LocalDateTime dateOfCreating;
+    @ManyToOne(cascade = CascadeType.REFRESH,fetch = FetchType.LAZY)
+    @JoinColumn//foreign key
+    private User user;
+
+
     @PrePersist//метод вызывает перед сохранением сущности
     private void init(){
         dateOfCreating = LocalDateTime.now();

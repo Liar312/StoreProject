@@ -1,7 +1,9 @@
 package com.example.storeproject.services;
 
 import com.example.storeproject.models.Image;
+import com.example.storeproject.models.User;
 import com.example.storeproject.repositories.ProductRepository;
+import com.example.storeproject.repositories.UserRepository;
 import jakarta.mail.Multipart;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +26,7 @@ import java.util.List;
 @Slf4j
 public class ProductService {
     private final ProductRepository productRepository;
+    private final UserRepository userRepository;
 
     private long ID = 0;
 
@@ -37,7 +41,8 @@ public class ProductService {
     }
 
     @Transactional
-    public void saveProduct(Product product, MultipartFile file1,MultipartFile file2,MultipartFile file3 ) throws IOException{   //принимаем на загрузку 3 фото(ниже пример с массивом)
+    public void saveProduct(Principal principal,Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3 ) throws IOException{   //принимаем на загрузку 3 фото(ниже пример с массивом)
+        product.setUser(getUserByPrincipal(principal));//principal используется для получения информации о текущем авторизованном пользователе
         Image image1;
         Image image2;
         Image image3;
@@ -62,6 +67,12 @@ public class ProductService {
         productFromDb.setPreviewImageId(productFromDb.getImages().get(0).getId());//обращаемся к первой фотке в массиве и получаем её айдишник
         productRepository.save(product);
     }
+    public User getUserByPrincipal(Principal principal){
+        if(principal == null) return new User();
+        return userRepository.findByEmail(principal.getName());
+    }
+
+
 
     private Image toImageEntity(MultipartFile file) throws IOException {
         Image image = new Image();

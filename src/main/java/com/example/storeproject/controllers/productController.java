@@ -12,6 +12,7 @@ import com.example.storeproject.services.ProductService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 
 
 @Controller
@@ -21,14 +22,14 @@ public class productController {
 
 
 @GetMapping("/")
-public String products(@RequestParam(name = "title", required = false) String title, Model model) {
-
+public String products(@RequestParam(name = "title", required = false) String title, Model model,Principal principal) {
+    model.addAttribute("user",productService.getUserByPrincipal(principal));
     model.addAttribute("products", productService.ListByTitle(title));
     return "products";
 }
     @PostMapping("product/create")
-    public String CreateProduct(@RequestParam("file1") MultipartFile file1,@RequestParam MultipartFile file2,@RequestParam MultipartFile file3, Product product) throws IOException {
-    productService.saveProduct(product,file1,file2,file3);//не забыть пробросить исключение если оно есть в сервисной части
+    public String CreateProduct(@RequestParam("file1") MultipartFile file1, @RequestParam MultipartFile file2, @RequestParam MultipartFile file3, Product product, Principal principal) throws IOException {
+    productService.saveProduct(principal,product,file1,file2,file3);//не забыть пробросить исключение если оно есть в сервисной части
         return"redirect:/"; //обновление списка
     }
 

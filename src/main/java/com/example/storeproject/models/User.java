@@ -7,9 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -67,6 +65,8 @@ public class User implements UserDetails {//интерфейс из springsecuri
     @CollectionTable(name = "user_role",joinColumns = @JoinColumn(name="user_id"))//указываем имя таблицЫ и стобца который отвечает за соединение элементов таблицы с основной коллекцией
     @Enumerated(EnumType.STRING)
     private Set<Role> roles =new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "user")
+    private List<Product> products = new ArrayList<>();
     private LocalDateTime dateOfCreated;
 
     @PrePersist
