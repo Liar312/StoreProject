@@ -33,7 +33,7 @@ public class SecurityConfig {
                                 .requestMatchers("/product/**", "/image/**")//указываем что по данному адресу мы будем требовать некоторые роли
                                 .hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")//требуемые роли (вроде как можно объединить со след параметром которые для остальных действий тоже требует авторизации)
 //                        .requestMatchers("/actuator/**").hasRole("ROLE_USER")
-                                .requestMatchers("/actuator/**").permitAll()
+                                .requestMatchers("/actuator/**").hasRole("ROLE_ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
