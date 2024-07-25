@@ -22,16 +22,19 @@ import org.springframework.stereotype.Component;
 @EnableWebSecurity
 @RequiredArgsConstructor
 @Configuration
-public class SecurityConfig  {
-  private final CustomUserDetailService customUserDetailService;
+public class SecurityConfig {
+    private final CustomUserDetailService customUserDetailService;
+
     @Bean
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests//определение правил авторизации для различиных http запросов
-                        .requestMatchers("/", "/registration").permitAll()//разрешает доступ по этому адресу всем юзерам
-                        .requestMatchers("/product/**", "/image/**")//указываем что по данному адресу мы будем требовать некоторые роли
-                        .hasAnyAuthority("ROLE_ADMIN","ROLE_USER")//требуемые роли (вроде как можно объединить со след параметром которые для остальных действий тоже требует авторизации)
-                        .anyRequest().authenticated()
+                                .requestMatchers("/", "/registration").permitAll()//разрешает доступ по этому адресу всем юзерам
+                                .requestMatchers("/product/**", "/image/**")//указываем что по данному адресу мы будем требовать некоторые роли
+                                .hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")//требуемые роли (вроде как можно объединить со след параметром которые для остальных действий тоже требует авторизации)
+//                        .requestMatchers("/actuator/**").hasRole("ROLE_USER")
+                                .requestMatchers("/actuator/**").permitAll()
+                                .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
@@ -48,8 +51,7 @@ public class SecurityConfig  {
     }
 
     @Bean
-
-      PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(8);
     }
 }

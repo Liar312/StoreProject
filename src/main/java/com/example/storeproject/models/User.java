@@ -21,7 +21,7 @@ public class User implements UserDetails {//интерфейс из springsecuri
 
     @Override
     public String getUsername() {
-        return Email;
+        return email;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class User implements UserDetails {//интерфейс из springsecuri
     @Column(name = "id")
     private Long id;
     @Column(name="email", unique = true)
-    private String Email;//используется как username
+    private String email;//используется как username
     @Column(name="Phone Number",unique = true)
     private String phoneNumber;
     @Column(name="password",length = 1000)
