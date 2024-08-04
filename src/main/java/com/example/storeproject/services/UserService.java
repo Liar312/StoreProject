@@ -6,9 +6,6 @@ import com.example.storeproject.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +26,11 @@ public class UserService {
         log.info("Saving new User with email: {}",email);
         userRepository.save(user);
         return true;
+    }
+
+    public User getUserByUsername(String username){
+        return userRepository.findByEmail(username);
+
     }
 
 }
