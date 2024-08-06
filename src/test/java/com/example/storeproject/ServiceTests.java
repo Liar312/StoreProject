@@ -34,10 +34,10 @@ public class ServiceTests {
         User user = new User();
         user.setName("testuser");
 
-        when(userRepository.findByEmail("testuser")).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail("testuser")).thenReturn(Optional.ofNullable(user));
 
-        User foundUser = userService.getUserByUsername("testuser");
+        Optional<User> foundUser = userService.getUserByUsername("testuser");
         assertNotNull(foundUser);
-        assertEquals("testuser",foundUser.getName());
+        assertEquals("testuser",foundUser.getClass().getName());
     }
 }

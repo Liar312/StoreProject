@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @Slf4j//logger
 @RequiredArgsConstructor
@@ -28,9 +31,15 @@ public class UserService {
         return true;
     }
 
-    public User getUserByUsername(String username){
-        return userRepository.findByEmail(username);
+    public Optional<User> getUserByUsername(String username){
+        return Optional.ofNullable(userRepository.findByEmail(username));
 
     }
-
+   public List<User> getAllUsers(){
+        return userRepository.findAll();
+   }
+   public boolean deleteUser(String username){
+        userRepository.deleteUserByUsername(username);
+       return true;
+   }
 }

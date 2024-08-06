@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ImageController {
     private final ImageRepository imageRepository;
 
-    private ResponseEntity<?> getImageByID(@RequestParam Long id){// ? в теле ответа означает что мы используем неопределенный тип данных
+    private ResponseEntity<?> getImageByID(@RequestParam Long id){
         Image image = imageRepository.findById(id).orElse(null);
         return ResponseEntity.ok()
                 .header("fileName", image.getOriginalName())
