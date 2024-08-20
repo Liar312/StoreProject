@@ -3,11 +3,16 @@ package com.example.storeproject.services;
 import com.example.storeproject.models.User;
 import com.example.storeproject.models.enums.Role;
 import com.example.storeproject.repositories.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.DialectOverride;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import springfox.documentation.annotations.Cacheable;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +20,7 @@ import java.util.Optional;
 @Service
 @Slf4j//logger
 @RequiredArgsConstructor
+@Component
 public class UserService {
     private final UserRepository userRepository;
     private  final PasswordEncoder passwordEncoder;
@@ -42,4 +48,14 @@ public class UserService {
         userRepository.deleteUserByUsername(username);
        return true;
    }
+
+   @Cacheable("users")
+    public User get(Long id){
+        log.info("getting user by id: {}",id);
+        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"+id));
+   }
+
+   public User create(User user){
+       return  userRepository.save(user);//метод исключительно для использования в тесте
+    }
 }
