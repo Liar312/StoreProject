@@ -49,13 +49,13 @@ public class UserService {
        return true;
    }
 
-   @Cacheable("users")
-    public User get(Long id){
-        log.info("getting user by id: {}",id);
-        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"+id));
-   }
-
-   public User create(User user){
-       return  userRepository.save(user);//метод исключительно для использования в тесте
-    }
+//   @Cacheable("users")
+//    public User get(Long id){
+//        log.info("getting user by id: {}",id);
+//        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"+id));  перенес в CacheUserService
+//   }
+//
+//   public User create(User user){
+//       return  userRepository.save(user);  метод пренесен в CacheUserService
+//    }
 }
