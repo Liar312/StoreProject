@@ -25,8 +25,23 @@ public class UserServiceCacheTest extends AbstractTest {
 
 
     }
-    private void getAndPrint(Long id){
+
+    private void getAndPrint(Long id) {
         log.info("user found: {}", cacheUserService.get(id));//так как здесь метод get ceachable
+    }
+
+    @Test
+    public void create() {
+        createAndPrint("Ivan", "ivan@mail.ru");
+        createAndPrint("Ivan", "ivan1122@mail.ru");
+        createAndPrint("Sergey", "ivan@mail.ru");
+
+        log.info("all enteries are below:");
+        cacheUserService.getAll().forEach(u -> log.info("{}", u.toString()));
+    }
+
+    public void createAndPrint(String name, String email) {
+        log.info("create user:{}", cacheUserService.create(name, email));
     }
 
 }
