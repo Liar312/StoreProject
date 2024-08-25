@@ -5,6 +5,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.engine.internal.CacheHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -42,5 +43,19 @@ public class CacheUserService {
     public List<CacheUser> getAll(){
         return cacheUserRepository.findAll();//простой выборник всей репы
     }
+
+    @Cacheable(value="users",key="cacheUser.name")
+    public CacheUser createOrReturnedCache(CacheUser cacheUser){
+        log.info("creating user{}",cacheUser);
+        return cacheUserRepository.save(cacheUser);
+    }
+
+    @CachePut(value = "users",key = "#cacheUser.name")
+    public CacheUser createAndRefreshCache(CacheUser cacheUser){
+        log.info("creating user{}",cacheUser);
+        return cacheUserRepository.save(cacheUser);
+    }
+
+
 
 }

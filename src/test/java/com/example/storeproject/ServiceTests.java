@@ -34,7 +34,7 @@ public class ServiceTests {
         User user = new User();
         user.setName("testuser");
 
-        when(userRepository.findByEmail("testuser")).thenReturn(Optional.ofNullable(user));
+//        when(userRepository.findByEmail("testuser")).thenReturn(Optional.ofNullable(user));
 
         Optional<User> foundUser = userService.getUserByUsername("testuser");
         assertNotNull(foundUser);

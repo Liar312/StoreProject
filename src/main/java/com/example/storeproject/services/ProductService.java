@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import com.example.storeproject.models.Product;
 
 import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.converter.BufferedImageHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +42,7 @@ public class ProductService {
     }
 
     @Transactional
+    @Cacheable(value = "products",key="#product.toString()")
     public void saveProduct(Principal principal,Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3 ) throws IOException{   //принимаем на загрузку 3 фото(ниже пример с массивом)
         product.setUser(getUserByPrincipal(principal));//principal используется для получения информации о текущем авторизованном пользователе
         Image image1;

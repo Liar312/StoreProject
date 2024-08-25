@@ -11,10 +11,17 @@ public class CacheEmailKeyTest extends AbstractTest{
     private CacheUserService cacheUserService;
     @Test
     public void CreateAndCacheByEmailTest(){
+        createAndPrintEmailCacheTest("Ivan", "ivan@mail.ru");
+        createAndPrintEmailCacheTest("Evgeniy", "ivan@mail.ru");
+        createAndPrintEmailCacheTest("Victor", "victor@mail.ru");
+
+        log.info("all enteries are below");
+        cacheUserService.getAll().forEach(u -> log.info("{}", u.toString()));
+
 
     }
 
-    public void CreateAndPrintEmailCacheTest(String name,String email){
+    public void createAndPrintEmailCacheTest(String name,String email){
         log.info("create user{}",cacheUserService.createAndCacheByEmail(name,email));
     }
 
