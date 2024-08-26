@@ -7,6 +7,7 @@ import org.hibernate.engine.internal.CacheHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-
+@Component
 public class CacheUserService {
     @Autowired
     private CacheUserRepository cacheUserRepository;

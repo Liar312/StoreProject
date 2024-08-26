@@ -1,9 +1,11 @@
 package com.example.storeproject.Configuration;
 
 import com.google.common.cache.CacheBuilder;
+import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.cache.concurrent.ConcurrentMapCache;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
@@ -29,5 +31,5 @@ public class CacheConfig {
             }
         };
     }
-}
 
+}
