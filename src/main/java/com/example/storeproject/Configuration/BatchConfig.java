@@ -46,4 +46,8 @@ public class BatchConfig {
         }});
         return flatFileItemReader;
     }
+   @Bean
+    public UserProcessor processor(){
+        return new UserProcessor(); //здесь прогоняем при надобности сущность через процессор для ее видоизменения
+   }
 }
