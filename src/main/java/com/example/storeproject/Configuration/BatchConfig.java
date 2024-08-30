@@ -2,11 +2,14 @@ package com.example.storeproject.Configuration;
 
 import com.example.storeproject.Cache.CacheUser;
 import com.example.storeproject.models.User;
+import org.springframework.batch.core.Job;
 import org.springframework.batch.core.configuration.JobFactory;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
+import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
@@ -49,5 +52,27 @@ public class BatchConfig {
    @Bean
     public UserProcessor processor(){
         return new UserProcessor(); //здесь прогоняем при надобности сущность через процессор для ее видоизменения
+   }
+   @Bean//запись в бд в пакетном режиме
+    public JdbcBatchItemWriter<CacheUser> writer(){
+        JdbcBatchItemWriter<CacheUser> writer = new JdbcBatchItemWriter<>();
+        writer.setItemSqlParameterSourceProvider(
+                new BeanPropertyItemSqlParameterSourceProvider<>());//источник sql параметров,берет свойства объекта cacheUser и передает в sql запрос
+       writer.setSql("INSERT INTO users (id, name,email) VALUES (:id, :firstName, :email)");
+       writer.setDataSource(this.dataSource);
+       return writer;
+   }
+   @Bean
+    public Job importUserJob(JobCompletionNotificationListener listener){
+
+   }
+   @Bean
+    public  Step step1() {
+       return this.stepBuilderFactory.get("step1")
+               .<User, User>chunk(10)
+               .reader(reader())
+               .processor(processor())
+               .writer(writer())
+               .build();
    }
 }
