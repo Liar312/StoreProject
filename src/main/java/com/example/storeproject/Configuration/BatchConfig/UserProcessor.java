@@ -1,4 +1,4 @@
-package com.example.storeproject.Configuration;
+package com.example.storeproject.Configuration.BatchConfig;
 
 import com.example.storeproject.Cache.CacheUser;
 import org.springframework.batch.item.ItemProcessor;

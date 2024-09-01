@@ -1,13 +1,14 @@
-package com.example.storeproject.Configuration;
+package com.example.storeproject.Configuration.BatchConfig;
 
 import com.example.storeproject.Cache.CacheUser;
-import com.example.storeproject.models.User;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.configuration.JobFactory;
+import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 
 import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
@@ -63,16 +64,22 @@ public class BatchConfig {
        return writer;
    }
    @Bean
-    public Job importUserJob(JobCompletionNotificationListener listener){
-
+    public Job importUserJob(JobCompletionNotificationListener jobExecution){ //внутри джобов у нас находятся наши степы через которые мы прогоняем все выше нстроенные конфиги и через них прогоняем наши данные
+        return new JobBuilder("ImportUserJob",jobRepository)
+                .incrementer(new RunIdIncrementer())//инкриментор для уникальных идентификаторов джоба
+                .listener(jobExecution)
+                .flow(step1())
+                .end()
+                .build();
    }
    @Bean
-    public  Step step1() {
-       return this.stepBuilderFactory.get("step1")
-               .<User, User>chunk(10)
+    public Step step1() {
+       return new StepBuilder("step1",jobRepository)
+               .<CacheUser,CacheUser>chunk(10,platformTransactionManager)//10 записей-одна транзакция
                .reader(reader())
                .processor(processor())
                .writer(writer())
                .build();
+
    }
 }
