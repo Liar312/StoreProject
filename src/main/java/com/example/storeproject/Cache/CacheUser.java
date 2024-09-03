@@ -20,6 +20,8 @@ public class CacheUser implements Serializable {
     private String name;
     @Column(name = "email")
     private String email;
+    @Column(name="city")
+    private String city;
 
     public CacheUser(String name,String email){
         this.email = email;

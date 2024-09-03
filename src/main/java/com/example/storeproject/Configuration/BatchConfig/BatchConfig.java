@@ -67,7 +67,7 @@ public class BatchConfig {
     public Job importUserJob(JobCompletionNotificationListener jobExecution){ //внутри джобов у нас находятся наши степы через которые мы прогоняем все выше нстроенные конфиги и через них прогоняем наши данные
         return new JobBuilder("ImportUserJob",jobRepository)
                 .incrementer(new RunIdIncrementer())//инкриментор для уникальных идентификаторов джоба
-                .listener(jobExecution)
+                .listener(jobExecution)//слушателя используем для получения логов
                 .flow(step1())
                 .end()
                 .build();
@@ -82,4 +82,5 @@ public class BatchConfig {
                .build();
 
    }
+
 }
