@@ -64,7 +64,7 @@ public class BatchConfig {
        return writer;
    }
    @Bean
-    public Job importUserJob(JobCompletionNotificationListener jobExecution){ //внутри джобов у нас находятся наши степы через которые мы прогоняем все выше нстроенные конфиги и через них прогоняем наши данные
+    public Job importUserJob(JobCompletionNotificationListener jobExecution){
         return new JobBuilder("ImportUserJob",jobRepository)
                 .incrementer(new RunIdIncrementer())//инкриментор для уникальных идентификаторов джоба
                 .listener(jobExecution)//слушателя используем для получения логов
