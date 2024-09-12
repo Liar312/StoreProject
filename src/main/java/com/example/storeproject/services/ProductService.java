@@ -93,6 +93,12 @@ public class ProductService {
     public Product getProductById(Long id){
         return productRepository.findById(id).orElse(null);//пробрасываем ошибку чтобы сделать соответсвие типов
     }
+    public boolean ProductExist(Long id){
+      if (productRepository.findById(id)!=null){
+          return true;
+      }
+      return false;
+    }
 
 
 }
